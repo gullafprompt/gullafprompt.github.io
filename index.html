@@ -6,219 +6,638 @@
 
     <title>Gullaf Prompt</title>
 
+    <meta name="description"
+          content="Gullaf Prompt — Todas as ideias merecem uma canção.">
+
     <style>
+
+        /* =====================================================
+           GULLAF PROMPT — WEB IDENTITY v1
+           Black / White / Orange / Terminal / HUD
+        ===================================================== */
+
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --grey: #bfbfbf;
+            --dark-grey: #252525;
+            --orange: #ff9800;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        body {
-            background: #000;
-            color: #fff;
-            font-family: Arial, Helvetica, sans-serif;
-            min-height: 100vh;
+        html {
+            scroll-behavior: smooth;
         }
 
+        body {
+            background: var(--black);
+            color: var(--white);
+            font-family: "Courier New", monospace;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* =====================================================
+           BACKGROUND
+        ===================================================== */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+
+            background-image:
+                radial-gradient(#222 1px, transparent 1px);
+
+            background-size: 35px 35px;
+            opacity: 0.16;
+        }
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
         .container {
-            max-width: 900px;
+            width: min(1100px, 100%);
             margin: auto;
-            padding: 60px 25px;
+            padding: 35px 25px 60px;
+            position: relative;
+        }
+
+        /* =====================================================
+           HUD CORNERS
+        ===================================================== */
+
+        .hud-corner {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-color: var(--orange);
+            opacity: 0.9;
+        }
+
+        .corner-tl {
+            top: 25px;
+            left: 12px;
+            border-top: 2px solid;
+            border-left: 2px solid;
+        }
+
+        .corner-tr {
+            top: 25px;
+            right: 12px;
+            border-top: 2px solid;
+            border-right: 2px solid;
+        }
+
+        .corner-bl {
+            bottom: 25px;
+            left: 12px;
+            border-bottom: 2px solid;
+            border-left: 2px solid;
+        }
+
+        .corner-br {
+            bottom: 25px;
+            right: 12px;
+            border-bottom: 2px solid;
+            border-right: 2px solid;
+        }
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        header {
             text-align: center;
+            padding: 65px 10px 75px;
+        }
+
+        .terminal-line {
+            color: var(--orange);
+            font-size: 13px;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+        }
+
+        .terminal-line span {
+            color: var(--white);
         }
 
         .logo {
-            font-size: 48px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: clamp(42px, 8vw, 76px);
             font-weight: 700;
-            letter-spacing: 5px;
-            margin-bottom: 15px;
+            letter-spacing: 9px;
+            line-height: 1;
+        }
+
+        .logo-prompt {
+            color: var(--orange);
+            font-size: clamp(20px, 4vw, 32px);
+            letter-spacing: 10px;
+            margin-top: 13px;
         }
 
         .tagline {
-            font-size: 18px;
-            color: #aaa;
-            margin-bottom: 60px;
+            color: var(--grey);
+            margin-top: 30px;
+            font-size: 14px;
+            letter-spacing: 2px;
         }
 
-        .section {
-            margin-bottom: 50px;
+        .tagline .orange {
+            color: var(--orange);
         }
 
-        .section h2 {
-            font-size: 18px;
-            letter-spacing: 3px;
+        /* =====================================================
+           DIVIDER
+        ===================================================== */
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 0 0 65px;
+            color: var(--orange);
+            font-size: 12px;
+        }
+
+        .divider::after {
+            content: "";
+            height: 1px;
+            background: #333;
+            flex: 1;
+        }
+
+        /* =====================================================
+           SECTION
+        ===================================================== */
+
+        section {
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            color: var(--orange);
+            font-size: 15px;
+            font-weight: normal;
+            letter-spacing: 1px;
             margin-bottom: 25px;
-            text-transform: uppercase;
         }
 
-        .links {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-
-        .link {
-            display: block;
-            padding: 16px;
-            border: 1px solid #333;
-            border-radius: 8px;
-            color: white;
-            text-decoration: none;
-            transition: 0.2s;
-        }
-
-        .link:hover {
-            background: #fff;
-            color: #000;
-            border-color: #fff;
-        }
+        /* =====================================================
+           LATEST RELEASE
+        ===================================================== */
 
         .release {
+            position: relative;
             border: 1px solid #333;
-            border-radius: 12px;
-            padding: 35px 25px;
+            padding: 45px 35px;
+            background: rgba(255,255,255,0.015);
+            overflow: hidden;
         }
 
-        .release h3 {
-            font-size: 26px;
-            margin-bottom: 10px;
+        .release::before,
+        .release::after {
+            content: "";
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            background: var(--orange);
         }
 
-        .release p {
-            color: #aaa;
+        .release::before {
+            top: 18px;
+            left: 18px;
+        }
+
+        .release::after {
+            bottom: 18px;
+            right: 18px;
+        }
+
+        .release-meta {
+            color: #666;
+            font-size: 11px;
             margin-bottom: 25px;
+        }
+
+        .release-title {
+            font-size: clamp(27px, 5vw, 46px);
+            font-weight: normal;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .release-title .song {
+            color: var(--orange);
+        }
+
+        .release-description {
+            color: var(--grey);
+            font-size: 14px;
+            margin-bottom: 30px;
+            line-height: 1.7;
         }
 
         .listen {
             display: inline-block;
-            padding: 14px 30px;
-            border-radius: 30px;
-            background: #fff;
-            color: #000;
+            border: 1px solid var(--orange);
+            color: var(--orange);
+            padding: 13px 25px;
             text-decoration: none;
-            font-weight: bold;
+            font-size: 13px;
+            transition: 0.25s;
         }
+
+        .listen:hover {
+            background: var(--orange);
+            color: var(--black);
+        }
+
+        /* =====================================================
+           LINKS
+        ===================================================== */
+
+        .links {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .link {
+            position: relative;
+            display: block;
+
+            border: 1px solid #292929;
+            padding: 19px 35px 19px 20px;
+
+            color: var(--grey);
+            text-decoration: none;
+
+            font-size: 13px;
+
+            transition:
+                border-color 0.2s,
+                color 0.2s,
+                background 0.2s;
+        }
+
+        .link::before {
+            content: ">";
+            position: absolute;
+            left: 9px;
+            color: #555;
+        }
+
+        .link:hover {
+            border-color: var(--orange);
+            color: var(--white);
+            background: rgba(255,152,0,0.04);
+        }
+
+        .link:hover::before {
+            color: var(--orange);
+        }
+
+        .link::after {
+            content: "↗";
+            position: absolute;
+            right: 14px;
+            color: #444;
+        }
+
+        .link:hover::after {
+            color: var(--orange);
+        }
+
+        /* =====================================================
+           ABOUT
+        ===================================================== */
 
         .about {
-            max-width: 650px;
-            margin: auto;
-            color: #aaa;
-            line-height: 1.7;
+            border: 1px solid #292929;
+            padding: 40px 35px;
+            position: relative;
         }
+
+        .about p {
+            max-width: 760px;
+            color: var(--grey);
+            font-size: 14px;
+            line-height: 2;
+        }
+
+        .about p + p {
+            margin-top: 22px;
+        }
+
+        .about strong {
+            color: var(--white);
+            font-weight: normal;
+        }
+
+        .about .orange {
+            color: var(--orange);
+        }
+
+        /* =====================================================
+           BOTTOM TERMINAL
+        ===================================================== */
+
+        .terminal {
+            border-top: 1px solid #222;
+            border-bottom: 1px solid #222;
+            padding: 16px 0;
+
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+
+            color: #555;
+            font-size: 11px;
+        }
+
+        .terminal .orange {
+            color: var(--orange);
+        }
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
 
         footer {
-            margin-top: 70px;
-            padding-top: 25px;
-            border-top: 1px solid #222;
-            color: #666;
-            font-size: 13px;
+            text-align: center;
+            padding-top: 45px;
+            color: #444;
+            font-size: 11px;
+            line-height: 2;
         }
 
-        @media (max-width: 600px) {
-            .logo {
-                font-size: 34px;
+        footer .orange {
+            color: var(--orange);
+        }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .container {
+                padding: 20px 18px 40px;
             }
+
+            .logo {
+                letter-spacing: 5px;
+            }
+
+            .logo-prompt {
+                letter-spacing: 6px;
+            }
+
+            .links {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .release {
+                padding: 35px 25px;
+            }
+
+            .terminal {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 450px) {
 
             .links {
                 grid-template-columns: 1fr;
             }
+
+            .tagline {
+                line-height: 1.7;
+            }
         }
+
     </style>
 </head>
+
 
 <body>
 
     <main class="container">
 
-        <div class="logo">
-            GULLAF PROMPT
+        <div class="hud-corner corner-tl"></div>
+        <div class="hud-corner corner-tr"></div>
+        <div class="hud-corner corner-bl"></div>
+        <div class="hud-corner corner-br"></div>
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <header>
+
+            <div class="terminal-line">
+                <span>&gt;</span> creating_song...<span class="orange">█</span>
+            </div>
+
+            <div class="logo">
+                GULLAF
+            </div>
+
+            <div class="logo-prompt">
+                PROMPT
+            </div>
+
+            <div class="tagline">
+                Todas as ideias merecem uma <span class="orange">canção.</span>
+            </div>
+
+        </header>
+
+
+        <div class="divider">
+            &gt; gullaf_prompt
         </div>
 
-        <div class="tagline">
-            Todas as ideias merecem uma canção.
-        </div>
 
+        <!-- =================================================
+             LATEST RELEASE
+        ================================================== -->
 
-        <section class="section">
-            <h2>Último lançamento</h2>
+        <section>
+
+            <h2 class="section-title">
+                &gt; latest_release
+            </h2>
 
             <div class="release">
-                <h3>Nome da Música</h3>
 
-                <p>
-                    A música mais recente do Gullaf Prompt.
+                <div class="release-meta">
+                    &gt; release_status: <span style="color:#ff9800;">available</span>
+                </div>
+
+                <h1 class="release-title">
+                    nome_da_musica<span class="song">.song</span>
+                </h1>
+
+                <p class="release-description">
+                    A música mais recente do Gullaf Prompt.<br>
+                    Uma ideia transformada em canção.
                 </p>
 
                 <a href="#" class="listen">
-                    OUVE AGORA
+                    &gt; listen_now_
                 </a>
+
             </div>
+
         </section>
 
 
-        <section class="section">
-            <h2>Ouve-nos</h2>
+        <!-- =================================================
+             LISTEN
+        ================================================== -->
+
+        <section>
+
+            <h2 class="section-title">
+                &gt; listen
+            </h2>
 
             <div class="links">
 
                 <a href="#" class="link">Spotify</a>
-
                 <a href="#" class="link">YouTube Music</a>
-
                 <a href="#" class="link">Amazon Music</a>
-
                 <a href="#" class="link">TIDAL</a>
-
                 <a href="#" class="link">Deezer</a>
-
                 <a href="#" class="link">Audiomack</a>
 
             </div>
+
         </section>
 
 
-        <section class="section">
-            <h2>Segue-nos</h2>
+        <!-- =================================================
+             SOCIAL
+        ================================================== -->
+
+        <section>
+
+            <h2 class="section-title">
+                &gt; follow
+            </h2>
 
             <div class="links">
 
-                <a href="https://www.youtube.com/@GullafPrompt" class="link">
+                <a
+                    href="https://www.youtube.com/@GullafPrompt"
+                    class="link"
+                    target="_blank">
                     YouTube
                 </a>
 
-                <a href="https://www.instagram.com/gullafprompt" class="link">
+                <a
+                    href="https://www.instagram.com/gullafprompt"
+                    class="link"
+                    target="_blank">
                     Instagram
                 </a>
 
-                <a href="https://www.tiktok.com/@gullaf.prompt" class="link">
+                <a
+                    href="https://www.tiktok.com/@gullaf.prompt"
+                    class="link"
+                    target="_blank">
                     TikTok
                 </a>
 
-                <a href="#" class="link">
+                <a
+                    href="#"
+                    class="link">
                     Facebook
                 </a>
 
             </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ABOUT
+        ================================================== -->
+
+        <section>
+
+            <h2 class="section-title">
+                &gt; about_gullaf_prompt
+            </h2>
+
+            <div class="about">
+
+                <p>
+                    Gullaf Prompt é um projeto musical criado a partir
+                    de <strong>ideias, conceitos, histórias e momentos</strong>
+                    que merecem ganhar uma canção.
+                </p>
+
+                <p>
+                    A <span class="orange">criatividade humana</span>
+                    encontra a inteligência artificial para transformar
+                    ideias em música.
+                </p>
+
+                <p>
+                    Diferentes ideias.
+                    Diferentes estilos.
+                    <strong>Diferentes canções.</strong>
+                </p>
+
+            </div>
+
         </section>
 
 
-        <section class="section">
+        <!-- =================================================
+             TERMINAL FOOTER
+        ================================================== -->
 
-            <h2>Gullaf Prompt</h2>
+        <div class="terminal">
 
-            <p class="about">
-                Um projeto musical criado a partir de criatividade humana
-                e colaboração com inteligência artificial.
-                Diferentes ideias, diferentes estilos, diferentes canções.
-            </p>
+            <span>
+                &gt; gullaf_prompt
+            </span>
 
-        </section>
+            <span>
+                every_idea_deserves_a_<span class="orange">song.</span>
+            </span>
+
+            <span>
+                <span class="orange">ADN_V1.0</span>
+            </span>
+
+        </div>
 
 
         <footer>
+
             © 2026 Gullaf Prompt
-            <br><br>
+
+            <br>
+
             Human creativity + AI collaboration
+
         </footer>
 
     </main>
